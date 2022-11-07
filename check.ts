@@ -25,18 +25,17 @@ if (localHash !== remoteHash) {
     content: Buffer.from(remoteHash).toString("base64"),
     sha: hashSha,
   });
-
+  console.log("committed new hash.txt");
   const fbPixelSourceSha = await getSHA("fb-pixel-source.js");
   await octokit.repos.createOrUpdateFileContents({
-    owner: "JamieHaywood",
-    repo: "fbpixel-version-tracker",
+      owner: "JamieHaywood",
+      repo: "fbpixel-version-tracker",
     path: "fb-pixel-source.js",
     message: `Update fb-pixel-source.js`,
     content: Buffer.from(remoteHash).toString("base64"),
     sha: fbPixelSourceSha,
-  });
-
-
+});
+console.log("committed new fb-pixel-source.js");
 }
 
 async function getSHA(path: string) {
