@@ -1,0 +1,19 @@
+{
+  "name": "fbpixel-version-tracker",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:jamiehaywood/fbpixel-version-tracker.git",
+  "author": "Jamie Haywood <jamie.haywood@vodafone.com>",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start": "tsx check.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.9",
+    "tsx": "^3.11.0"
+  },
+  "dependencies": {
+    "@octokit/rest": "^19.0.5"
+  }
+}
