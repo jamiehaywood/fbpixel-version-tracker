@@ -7,14 +7,14 @@ const octokit = new Octokit({
 });
 
 const res = await fetch("https://connect.facebook.net/en_US/fbevents.js");
-const body = await res.text();
+const fbPixelSource = await res.text();
 
-const remoteHash = crypto.createHash("sha256").update(body).digest("hex");
-const localHash = await fs.readFile("hash.txt", "utf-8");
+const remoteSourceHash = crypto.createHash("sha256").update(fbPixelSource).digest("hex");
+const localSourceHash = await fs.readFile("hash.txt", "utf-8");
 
-if (localHash !== remoteHash) {
-  await fs.writeFile("hash.txt", remoteHash, "utf-8");
-  await fs.writeFile("fb-pixel-source.js", body, "utf-8");
+if (localSourceHash !== remoteSourceHash) {
+    await fs.writeFile("hash.txt", remoteSourceHash, "utf-8");
+    await fs.writeFile("fb-pixel-source.js", fbPixelSource, "utf-8");
 
   const hashSha = await getSHA("hash.txt");
   await octokit.repos.createOrUpdateFileContents({
@@ -22,7 +22,7 @@ if (localHash !== remoteHash) {
     repo: "fbpixel-version-tracker",
     path: "hash.txt",
     message: `Update hash.txt`,
-    content: Buffer.from(remoteHash).toString("base64"),
+    content: Buffer.from(remoteSourceHash).toString("base64"),
     sha: hashSha,
   });
   console.log("committed new hash.txt");
@@ -32,7 +32,7 @@ if (localHash !== remoteHash) {
       repo: "fbpixel-version-tracker",
     path: "fb-pixel-source.js",
     message: `Update fb-pixel-source.js`,
-    content: Buffer.from(remoteHash).toString("base64"),
+    content: Buffer.from(fbPixelSource).toString("base64"),
     sha: fbPixelSourceSha,
 });
 console.log("committed new fb-pixel-source.js");
