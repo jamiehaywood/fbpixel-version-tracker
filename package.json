@@ -7,7 +7,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "start": "tsx check.ts"
+    "check-source": "tsx check.ts"
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
